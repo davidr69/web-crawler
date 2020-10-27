@@ -18,3 +18,9 @@ Use 4 threads using ExecutorService (pool)
 
 Spring profiles ... useful when running tests; will change InputStream from Socket to File
 for integration tests.
+
+---
+
+`mvn spring-boot:run -Dspring-boot.run.arguments={url}`
+
+Only follow <a>; don't try to find .onClick() or any other type of link
