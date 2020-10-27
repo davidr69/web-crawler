@@ -12,28 +12,8 @@ The output should be a simple structured site map (this does not need to be a tr
 
 ### Design decisions
 
-Should we honor `robots.txt`?
-
 Use 4 threads using ExecutorService (pool)
-
-Spring profiles ... useful when running tests; will change InputStream from Socket to File
-for integration tests.
 
 ---
 
 `mvn spring-boot:run -Dspring-boot.run.arguments={url}`
-
-Only follow <a>; don't try to find .onClick() or any other type of link
-
-HTML parsing would be a snap with Groovy, XmlSlurper, and GPath, but let's do this
-as "pure" Java.
-
-Use DOM parser rather than SAX parser
-
-Do we really need a StreamSvc if the DOM parse accepts an InputStream?
-
-Will resort to manually parsing HTML string since XML DOM parser is throwing:
-
-`Attribute name "async" associated with an element type "script" must be followed by the ' = ' character.`
-
-Looks like jsoup is the easiest approach.
