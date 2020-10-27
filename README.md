@@ -17,3 +17,12 @@ Use 4 threads using ExecutorService (pool)
 ---
 
 `mvn spring-boot:run -Dspring-boot.run.arguments={url}`
+
+
+### Approach
+
+---
+
+A radix tree is well-suited to represent the data structure:
+https://bitbucket.org/drosario69/daily-coding-problems/src/master/medium-problem_011/
+Rather than each node being a letter, each node will be a word. It makes traversal simpler and logical.
