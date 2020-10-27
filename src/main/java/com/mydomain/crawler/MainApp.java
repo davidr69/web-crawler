@@ -1,12 +1,9 @@
 package com.mydomain.crawler;
 
-import com.mydomain.crawler.service.HttpSvc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-
-import java.io.InputStream;
 
 @ComponentScan
 @SpringBootApplication
@@ -19,7 +16,7 @@ public class MainApp {
 			System.exit(1);
 		}
 		System.out.println(args[0]);
-		HttpSvc svc = ctx.getBean(HttpSvc.class);
+/*		HttpSvc svc = ctx.getBean(HttpSvc.class);
 		InputStream is = svc.getStream(args[0]);
 		System.out.println(is);
 		if(is != null) {
@@ -28,6 +25,6 @@ public class MainApp {
 			} catch(Exception e) {
 				//
 			}
-		}
+		}*/
 	}
 }

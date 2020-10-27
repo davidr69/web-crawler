@@ -24,3 +24,16 @@ for integration tests.
 `mvn spring-boot:run -Dspring-boot.run.arguments={url}`
 
 Only follow <a>; don't try to find .onClick() or any other type of link
+
+HTML parsing would be a snap with Groovy, XmlSlurper, and GPath, but let's do this
+as "pure" Java.
+
+Use DOM parser rather than SAX parser
+
+Do we really need a StreamSvc if the DOM parse accepts an InputStream?
+
+Will resort to manually parsing HTML string since XML DOM parser is throwing:
+
+`Attribute name "async" associated with an element type "script" must be followed by the ' = ' character.`
+
+Looks like jsoup is the easiest approach.
