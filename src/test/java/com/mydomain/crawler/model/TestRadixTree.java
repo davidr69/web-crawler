@@ -114,6 +114,7 @@ public class TestRadixTree {
 		for(String u: uris) {
 			try {
 				tree.put(u);
+				tree.display();
 			} catch(CrawlerException e) {
 				System.err.println(e.getMessage());
 				Assert.fail();

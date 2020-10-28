@@ -53,6 +53,8 @@ public class RadixTree {
 				newNode.setPath(path);
 				tree.getPaths().add(newNode);
 				recurse(newNode, nodes, index + 1);
+			} else {	// navigate down
+				recurse(node.get(), nodes, index + 1);
 			}
 		} else {
 			// just add
@@ -65,6 +67,18 @@ public class RadixTree {
 	}
 
 	public void display() {
+		recurseDisplay(root, 0);
+	}
 
+	private void recurseDisplay(TreeNode tree, int level) {
+		System.out.print("\t".repeat(level * 2));
+		System.out.println("data: " + tree.getPath());
+		System.out.print("\t".repeat(level * 2));
+		System.out.println("children:");
+		if(tree.getPaths() != null) {
+			for(TreeNode node: tree.getPaths()) {
+				recurseDisplay(node, level + 1);
+			}
+		}
 	}
 }
