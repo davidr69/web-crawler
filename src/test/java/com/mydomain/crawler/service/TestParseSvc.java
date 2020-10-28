@@ -2,7 +2,7 @@ package com.mydomain.crawler.service;
 
 import com.mydomain.crawler.CrawlerException;
 
-import java.util.HashSet;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class TestParseSvc {
 	public void testClarin() {
 		// integration test; if Clarin is down, the test will fail
 		try {
-			HashSet<String> anchors = parseSvc.parseUriToDocument("https://www.clarin.com");
+			List<String> anchors = parseSvc.parseUriToDocument("https://www.clarin.com");
 			Assert.assertTrue(anchors.size() > 0);
 		} catch(CrawlerException e) {
 			e.printStackTrace();
