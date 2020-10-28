@@ -5,7 +5,8 @@ import java.util.List;
 public class TreeNode {
 	private String path;
 	private List<TreeNode> paths;
-	private Boolean visited;
+	private boolean visited = false;
+	private boolean leafnode = false;
 
 	public String getPath() { return path; }
 	public void setPath(String path) { this.path = path; }
@@ -13,6 +14,9 @@ public class TreeNode {
 	public List<TreeNode> getPaths() { return paths; }
 	public void setPaths(List<TreeNode> paths) { this.paths = paths; }
 
-	public Boolean getVisited() { return visited; }
-	public void setVisited(Boolean visited) { this.visited = visited; }
+	public boolean isVisited() { return visited; }
+	public void setVisited(boolean visited) { this.visited = visited; }
+
+	public boolean isLeafnode() { return leafnode; }
+	public void setLeafnode(boolean leafnode) { this.leafnode = leafnode; }
 }

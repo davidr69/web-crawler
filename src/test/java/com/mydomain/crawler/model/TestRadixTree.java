@@ -120,5 +120,8 @@ public class TestRadixTree {
 			}
 		}
 		tree.display();
+
+		List<String> travel = tree.normalize();
+		travel.forEach(System.out::println);
 	}
 }

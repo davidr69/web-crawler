@@ -3,6 +3,7 @@ package com.mydomain.crawler.model;
 import com.mydomain.crawler.CrawlerException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class RadixTree {
@@ -28,20 +29,23 @@ public class RadixTree {
 				recurse(root, parts, 0);
 			}
 		} else {
-			// leaf node; don't even try to process
-/*			Optional<TreeNode> opt = root.getPaths().stream().filter( p -> p.getPath().equals(uri)).findFirst();
-			if(opt.isEmpty()) {
-				System.out.println("Leaf node: " + uri);
+			if(root.getPaths() == null) {
+				root.setPaths(new ArrayList<>());
+			}
+			// external node; don't even try to process
+			Optional<TreeNode> opt = root.getPaths().stream().filter( p -> p.getPath().equals(uri)).findFirst();
+			if(opt.isEmpty()) { // distinct; store
 				TreeNode node = new TreeNode();
 				node.setPath(uri);
-				paths.add(node);
-			}*/
+				root.getPaths().add(node);
+			}
 		}
 	}
 
 	private void recurse(TreeNode tree, String[] nodes, int index) {
 		// does this node exist?
 		if(index >= nodes.length) {
+			tree.setLeafnode(true);	// mark as leaf node
 			return;	// end recursion
 		}
 
@@ -75,6 +79,26 @@ public class RadixTree {
 		if(tree.getPaths() != null) {
 			for(TreeNode node: tree.getPaths()) {
 				recurseDisplay(node, level + 1);
+			}
+		}
+	}
+
+	// returns list of URL's
+	public List<String> normalize() {
+		List<String> normal = new ArrayList<>();
+		String crumbs = domain.endsWith("/") ? domain.substring(0, domain.length() - 1) : domain;
+		recurseBuild(crumbs, normal, root);
+		return normal;
+	}
+
+	private void recurseBuild(String crumbs, List<String> build, TreeNode tree) {
+		String current = tree.getPath() == null ? crumbs : crumbs + "/" + tree.getPath();
+		if(tree.isLeafnode()) {
+			build.add(current);
+		}
+		if(tree.getPaths() != null) { // even "leaf" nodes can have children
+			for(TreeNode node: tree.getPaths()) {
+				recurseBuild(current, build, node);
 			}
 		}
 	}
