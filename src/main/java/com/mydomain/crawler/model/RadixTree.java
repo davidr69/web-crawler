@@ -3,12 +3,11 @@ package com.mydomain.crawler.model;
 import com.mydomain.crawler.CrawlerException;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class RadixTree {
-	private static String domain;
-	private TreeNode root;
+	private final String domain;
+	private final TreeNode root;
 
 	public RadixTree(String uri) {
 		domain = uri;
@@ -23,19 +22,20 @@ public class RadixTree {
 			return;		// don't waste time
 		}
 		if(uri.startsWith(domain)) { // not an external link
-			String[] parts = uri.substring(domain.length()).split("/");
+			String params = uri.substring(domain.length());
+			String[] parts = params.split("/");
 			if(parts.length > 0) {
 				recurse(root, parts, 0);
 			}
 		} else {
 			// leaf node; don't even try to process
-/*			Optional<TreeNode> opt = paths.stream().filter( p -> p.getPath().equals(uri)).findFirst(); // findAny runs in parallel
+/*			Optional<TreeNode> opt = root.getPaths().stream().filter( p -> p.getPath().equals(uri)).findFirst();
 			if(opt.isEmpty()) {
 				System.out.println("Leaf node: " + uri);
 				TreeNode node = new TreeNode();
-				node.setPath(uri);*/
-//				paths.add(node);
-//			}
+				node.setPath(uri);
+				paths.add(node);
+			}*/
 		}
 	}
 
@@ -71,10 +71,7 @@ public class RadixTree {
 	}
 
 	private void recurseDisplay(TreeNode tree, int level) {
-		System.out.print("\t".repeat(level * 2));
-		System.out.println("data: " + tree.getPath());
-		System.out.print("\t".repeat(level * 2));
-		System.out.println("children:");
+		System.out.printf("%s %s%n", "\t".repeat(level * 2), tree.getPath() == null ? "root" : tree.getPath());
 		if(tree.getPaths() != null) {
 			for(TreeNode node: tree.getPaths()) {
 				recurseDisplay(node, level + 1);
