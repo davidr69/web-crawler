@@ -32,12 +32,13 @@ public class CrawlSvc {
 		logger.info("Workflow started");
 		this.domain = domain;
 
-		List<String> anchors = null;
+		List<String> anchors;
 		try {
+			// get home page
 			anchors = parseSvc.parseUriToDocument(domain);
 		} catch(CrawlerException e) {
 			logger.error("Parser error: {}", e.getMessage());
-			//return;
+			return;
 		}
 
 		tree = new RadixTree(domain);
@@ -48,7 +49,7 @@ public class CrawlSvc {
 
 	private void work(List<String> urls) {
 		logger.info("work ...");
-		// get home page
+
 		for(String uri: urls) {
 			try {
 				// multiple threads might try to update the tree, so ...
@@ -60,6 +61,5 @@ public class CrawlSvc {
 				logger.error("Radix tree error: {}", e.getMessage());
 			}
 		}
-		//tree.display();
 	}
 }

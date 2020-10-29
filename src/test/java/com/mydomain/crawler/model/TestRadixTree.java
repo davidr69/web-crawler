@@ -119,9 +119,7 @@ public class TestRadixTree {
 				Assert.fail();
 			}
 		}
-		tree.display();
-
-		List<String> travel = tree.normalize();
-		travel.forEach(System.out::println);
+		Assert.assertNotNull(uris);
+		Assert.assertTrue(uris.size() > 0);
 	}
 }
