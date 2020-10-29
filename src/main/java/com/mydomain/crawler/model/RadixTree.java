@@ -15,18 +15,19 @@ public class RadixTree {
 		root = new TreeNode();
 	}
 
-	public void put(String uri) throws CrawlerException {
+	public boolean put(String uri) throws CrawlerException {
 		if (uri == null) {
 			throw new CrawlerException("URI cannot be null");
 		}
 		if(uri.equals(domain)) {
-			return;		// don't waste time
+			return false;		// don't waste time
 		}
+		int inserts = 0;
 		if(uri.startsWith(domain)) { // not an external link
 			String params = uri.substring(domain.length());
 			String[] parts = params.split("/");
 			if(parts.length > 0) {
-				recurse(root, parts, 0);
+				inserts = recurse(root, parts, 0);
 			}
 		} else {
 			if(root.getPaths() == null) {
@@ -38,15 +39,18 @@ public class RadixTree {
 				TreeNode node = new TreeNode();
 				node.setPath(uri);
 				root.getPaths().add(node);
+				return true;
 			}
 		}
+		return inserts > 0;
 	}
 
-	private void recurse(TreeNode tree, String[] nodes, int index) {
+	// returns number of insertions
+	private int recurse(TreeNode tree, String[] nodes, int index) {
 		// does this node exist?
 		if(index >= nodes.length) {
 			tree.setLeafnode(true);	// mark as leaf node
-			return;	// end recursion
+			return 0;	// end recursion
 		}
 
 		String path = nodes[index];
@@ -56,9 +60,9 @@ public class RadixTree {
 				TreeNode newNode = new TreeNode();
 				newNode.setPath(path);
 				tree.getPaths().add(newNode);
-				recurse(newNode, nodes, index + 1);
+				return recurse(newNode, nodes, index + 1) + 1;
 			} else {	// navigate down
-				recurse(node.get(), nodes, index + 1);
+				return recurse(node.get(), nodes, index + 1);
 			}
 		} else {
 			// just add
@@ -66,7 +70,7 @@ public class RadixTree {
 			newNode.setPath(path);
 			tree.setPaths(new ArrayList<>());
 			tree.getPaths().add(newNode);
-			recurse(newNode, nodes, index + 1);
+			return recurse(newNode, nodes, index + 1) + 1;
 		}
 	}
 
